@@ -7,12 +7,16 @@ import com.example.ordering.member.dto.Request.MemberCreateReqDto;
 import com.example.ordering.member.dto.Request.MemberLoginReqDto;
 import com.example.ordering.member.dto.Response.MemberResponseDto;
 import com.example.ordering.member.repository.MemberRepository;
+import com.example.ordering.order.domain.Ordering;
+import com.example.ordering.order.dto.Response.OrderResDto;
+import com.example.ordering.order_item.domain.OrderItem;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityNotFoundException;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 import java.util.Optional;

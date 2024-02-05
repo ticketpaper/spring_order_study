@@ -4,6 +4,7 @@ import com.example.ordering.common.ErrorResponseDto;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -25,6 +26,8 @@ import java.util.List;
 
 @Component
 public class JwtAuthFilter extends GenericFilter {
+    @Value("${jwt.secretKey}")
+    private String secretKey;
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         try {
@@ -37,7 +40,7 @@ public class JwtAuthFilter extends GenericFilter {
                 String token = bearerToken.substring(7);
 //                토큰 검증 및 claims 추출, parse 하는것 자체가 검증
 //                Authentication 객체를 생성하기위한 UserDetails 생성
-                Claims claims = Jwts.parser().setSigningKey("mySecretKey").parseClaimsJws(token).getBody(); //검증
+                Claims claims = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody(); //검증
 //                권한이 여러개 일수도 있어서 리스트로 받음
                 List<GrantedAuthority> authorities = new ArrayList<>();
 //                ROLE_권한 이 패턴으로 스프링에서 기본적으로 권한 체크
